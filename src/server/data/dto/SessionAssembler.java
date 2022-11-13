@@ -14,7 +14,7 @@ public class SessionAssembler {
 	}
 	public SessionDTO sessionToDTO(Session session) {
 		SessionDTO dto = new SessionDTO();
-		dto.setCod(session.getCod());
+		
 		dto.setDistance(session.getDistance());
 		dto.setDuration(session.getDuration());
 		dto.setStart(session.getStart());

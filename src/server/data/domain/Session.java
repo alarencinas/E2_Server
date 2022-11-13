@@ -10,7 +10,7 @@ import java.util.Locale;
 
 
 public class Session {
-	private int cod;
+	
 	private String title;
 	private String sport;
 	private int distance;
@@ -81,15 +81,10 @@ public class Session {
 		
 		return result.toString();		
 	}
-	public int getCod() {
-		return cod;
-	}
-	public void setCod(int cod) {
-		this.cod = cod;
-	}
+	
 	public boolean equals(Object obj) {
 		if (this.getClass().getName().equals(obj.getClass().getName())) {
-			return this.cod == ((Session)obj).cod;
+			return this.title == ((Session)obj).title;
 		}
 		
 		return false;

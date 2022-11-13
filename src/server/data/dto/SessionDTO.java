@@ -10,7 +10,7 @@ import server.data.domain.Session;
 import server.data.domain.User;
 
 public class SessionDTO implements Serializable {
-	private int cod;
+	private static final long serialVersionUID = 1L;
 	private String title;
 	private String sport;
 	private int distance;
@@ -76,12 +76,7 @@ public class SessionDTO implements Serializable {
 		
 		return result.toString();		
 	}
-	public int getCod() {
-		return cod;
-	}
-	public void setCod(int cod) {
-		this.cod = cod;
-	}
+	
 	
 	
 }
