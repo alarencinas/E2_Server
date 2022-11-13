@@ -1,5 +1,6 @@
 package server.data.dto;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,14 +9,14 @@ import java.util.Locale;
 import server.data.domain.Session;
 import server.data.domain.User;
 
-public class SessionDTO {
+public class SessionDTO implements Serializable {
 	private int cod;
 	private String title;
 	private String sport;
 	private int distance;
 	private Date start;
 	private Date end;
-	private User owner;
+	
 	private long duration;
 	public String getTitle() {
 		return title;
@@ -47,12 +48,7 @@ public class SessionDTO {
 	public void setEnd(Date end) {
 		this.end = end;
 	}
-	public User getOwner() {
-		return owner;
-	}
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
+	
 	public long getDuration() {
 		return duration;
 	}
