@@ -114,8 +114,6 @@ public class CrAppService {
 			newCr.setChallenge(challenge);
 			newCr.setSession(session);
 			newCr.setUser(user);		
-			session.addCr(newCr);
-			challenge.addCr(newCr);
 			user.addCr(newCr);
 			return true;
 		

@@ -2,6 +2,7 @@ package server.remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +81,40 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		}
 	
 	}
+	public Challenge createChallenge(String name,Date start, Date end, int distance, long time, User Owner) {
+		Challenge ch = new Challenge();
+		ch.setName(name);
+		ch.setOwner(Owner);
+		ch.setDistance(distance);
+		ch.setTime(time);
+		ch.setEnd(end);
+		
+		return ch;
+		
+		
+	}
+	public Session createSession(String title, String sport,int distance,Date start,Date end,User Owner,long duration) {
+		Session s= new Session();
+		s.setDistance(distance);
+		s.setDuration(duration);
+		s.setEnd(end);
+		s.setStart(start);
+		s.setSport(sport);
+		s.setOwner(Owner);
+		s.setTitle(title);
+		return s;
+	}
+	public User RegisterUser(String nickname,String password) {
+		User u=new User();
+		u.setChallenges(null);
+		u.setNickname(nickname);
+		u.setEmail(nickname);
+		u.setPassword(password);
+		u.setSessions(null);
+		return u;
+	}
+	
+	
 	public boolean makeCr(long token,String sessionorchallengetitle) throws RemoteException {
 		System.out.println(" * RemoteFacade makeCr session or challenge :" + sessionorchallengetitle);
 		if(this.serverState.containsKey(token)) {
@@ -93,4 +128,6 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 			throw new RemoteException("To place a session you must first log in");
 		}
 	}
+	
+	
 }
