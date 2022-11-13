@@ -18,5 +18,6 @@ public interface IRemoteFacade extends Remote {
 	public Challenge createChallenge(String name,Date start, Date end, int distance, long time, User Owner);
 	public Session createSession(String title, String sport,int distance,Date start,Date end,User Owner,long duration);
 	public User RegisterUser(String nickname,String password);
+	public void signUp(User Owner, Challenge challenge);
 	
 }
