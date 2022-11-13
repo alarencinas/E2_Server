@@ -21,6 +21,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 	private Map<Long, User> serverState = new HashMap<>();
 	//TODO: Remove this instances when Singleton Pattern is implemented
 	private LoginAppService loginService = new LoginAppService();
+	private CrAppService crService= new CrAppService();
 	public RemoteFacade() throws RemoteException {
 		super();		
 	}
@@ -55,9 +56,41 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 			throw new RemoteException("User is not logged in!");
 		}
 		//¿HAcer mas Tarde con CrApp?
-//	public List<ChallengeDTO> getChallenges() throws RemoteException{
-//		System.out.println(" * RemoteFacade getChallenges()");
-//		
-//	}
+	}
+	public List<SessionDTO> getSessions() throws RemoteException{
+		System.out.println(" * RemoteFacade getSessions()");
+		//Get Sessions using CrAppService
+		List<Session> sessions= crService.getSessions();
+		if(sessions!=null) {
+			return SessionAssembler.getInstance().sessionToDTO(sessions);
+			
+		}else {
+			throw new RemoteException("getSessions() fails");
+		}
+	}
+	public List<ChallengeDTO> getChallenges() throws RemoteException{
+		System.out.println(" * RemoteFacade getChallenges()");
+		//Get Sessions using CrAppService
+		List<Challenge> challenges= crService.getChallenges();
+		if(challenges!=null) {
+			return ChallengeAssembler.getInstance().challengeToDTO(challenges);
+			
+		}else {
+			throw new RemoteException("getChallenges() fails");
+		}
+	
+	}
+	public boolean makeCr(long token,String sessionorchallengetitle) throws RemoteException {
+		System.out.println(" * RemoteFacade makeCr session or challenge :" + sessionorchallengetitle);
+		if(this.serverState.containsKey(token)) {
+			//Make the Cr using Cr Application Service
+			if(crService.makeCr(this.serverState.get(token), sessionorchallengetitle )) {
+				return true;
+			}else {
+				throw new RemoteException("makeCr() fails!");
+			}
+		}else {
+			throw new RemoteException("To place a session you must first log in");
+		}
 	}
 }

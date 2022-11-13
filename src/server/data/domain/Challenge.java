@@ -14,6 +14,19 @@ public class Challenge {
 	private Date end;
 	private int distance;
 	private float time;
+	private User owner;
+	private List<Cr> crs= new ArrayList<>();
+	public List<Cr> getCrs(){
+		return crs;
+	}
+	public void setCrs(List<Cr> crs) {
+		this.crs=crs;
+	}
+	public void addCr(Cr cr) {
+		if(cr!=null && !this.crs.contains(cr)) {
+			this.crs.add(cr);
+		}
+	}
 	public String getName() {
 		return name;
 	}
@@ -68,6 +81,12 @@ public class Challenge {
 		}
 		
 		return false;
+	}
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 	
 }

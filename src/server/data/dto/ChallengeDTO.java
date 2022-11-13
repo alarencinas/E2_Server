@@ -4,6 +4,8 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import server.data.domain.User;
 //This class implements DTO pattern
 public class ChallengeDTO implements Serializable{
 	//This attribute is needed to implement the "Serializable" interface.
@@ -13,6 +15,8 @@ public class ChallengeDTO implements Serializable{
 	private Date end;
 	private int distance;
 	private float time;
+	private User owner;
+	
 	public String getName() {
 		return name;
 	}
@@ -60,5 +64,11 @@ public class ChallengeDTO implements Serializable{
 		result.append(numberFormatter.format(this.time));
 		
 		return result.toString();
+	}
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 }

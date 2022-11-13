@@ -8,7 +8,18 @@ public class User {
 	private String email;
 	private List<Challenge> challenges= new ArrayList<>();
 	private List<Session> sessions= new ArrayList<>();
-	
+	private List<Cr> crs= new ArrayList<>();
+	public List<Cr> getCrs(){
+		return crs;
+	}
+	public void setCrs(List<Cr> crs) {
+		this.crs=crs;
+	}
+	public void addCr(Cr cr) {
+		if(cr!=null && !this.crs.contains(cr)) {
+			this.crs.add(cr);
+		}
+	}
 	public String getNickname() {
 		return nickname;
 	}

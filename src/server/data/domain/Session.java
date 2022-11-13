@@ -18,6 +18,18 @@ public class Session {
 	private Date end;
 	private User owner;
 	private long duration;
+	private List<Cr> crs= new ArrayList<>();
+	public List<Cr> getCrs(){
+		return crs;
+	}
+	public void setCrs(List<Cr> crs) {
+		this.crs=crs;
+	}
+	public void addCr(Cr cr) {
+		if(cr!=null && !this.crs.contains(cr)) {
+			this.crs.add(cr);
+		}
+	}
 	public String getTitle() {
 		return title;
 	}

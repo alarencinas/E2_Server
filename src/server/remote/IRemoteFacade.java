@@ -8,4 +8,8 @@ import server.data.dto.SessionDTO;
 public interface IRemoteFacade extends Remote {
 	public long login(String email, String password) throws RemoteException;
 	public void logout(long token) throws RemoteException;
+	public List<SessionDTO> getSessions() throws RemoteException;
+	public List<ChallengeDTO> getChallenges() throws RemoteException;
+	public boolean makeCr(long token,String sessionorchallengetitle) throws RemoteException ;
+		
 }
