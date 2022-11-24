@@ -82,7 +82,13 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		}
 	
 	}
-	public ChallengeDTO createChallenge(String name,Date start, Date end, int distance, long time, long token ) {
+	public ChallengeDTO createChallenge(String name,Date start, Date end, int distance, long time, long token ) throws RemoteException {
+		
+
+		if (this.serverState.containsKey(token)) {
+			//Logout means remove the User from Server State
+		
+		
 		ChallengeDTO chDTO = new ChallengeDTO();
 		chDTO.setName(name);
 		
@@ -90,11 +96,14 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		chDTO.setTime(time);
 		chDTO.setEnd(end);
 		
-		return chDTO;
+		return chDTO;}else {
+			throw new RemoteException("create challenge fails!");
+		}
 		
 		
 	}
-	public SessionDTO createSession(String title, String sport,int distance,Date start,Date end,long token,long duration) {
+	public SessionDTO createSession(String title, String sport,int distance,Date start,Date end,long token,long duration)  throws RemoteException {
+		if (this.serverState.containsKey(token)) {
 		SessionDTO s= new SessionDTO();
 		s.setDistance(distance);
 		s.setDuration(duration);
@@ -104,6 +113,8 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		
 		s.setTitle(title);
 		return s;
+	}else {
+		throw new RemoteException("create session fails!");
 	}
 	public UserDTO RegisterUser(String nickname,String password) {
 		UserDTO u=new UserDTO();
