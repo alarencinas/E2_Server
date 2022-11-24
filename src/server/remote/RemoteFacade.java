@@ -140,10 +140,10 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 			throw new RemoteException("To place a session you must first log in");
 		}
 	}
-	public void signUp(User Owner, Challenge challenge) {
-		Owner.addChallenge(challenge);
+	//public void signUp(long token, Challenge challenge) {
+	//	Owner.addChallenge(challenge);
 		
-	}
+	//}
 	
 	
 }
