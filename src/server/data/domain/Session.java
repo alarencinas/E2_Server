@@ -67,8 +67,6 @@ public class Session {
 		NumberFormat numberFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault()); 
 
 		StringBuffer result = new StringBuffer();
-		
-		
 		result.append(this.title);
 		result.append("' Sport: ");
 		result.append(this.sport);

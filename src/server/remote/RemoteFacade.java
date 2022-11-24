@@ -14,6 +14,7 @@ import server.data.dto.ChallengeAssembler;
 import server.data.dto.SessionAssembler;
 import server.data.dto.ChallengeDTO;
 import server.data.dto.SessionDTO;
+import server.data.dto.UserDTO;
 import server.services.LoginAppService;
 import server.services.CrAppService;
 public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  {
@@ -81,31 +82,31 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		}
 	
 	}
-	public Challenge createChallenge(String name,Date start, Date end, int distance, long time, User Owner) {
-		Challenge ch = new Challenge();
-		ch.setName(name);
-		ch.setOwner(Owner);
-		ch.setDistance(distance);
-		ch.setTime(time);
-		ch.setEnd(end);
+	public ChallengeDTO createChallenge(String name,Date start, Date end, int distance, long time, long token ) {
+		ChallengeDTO chDTO = new ChallengeDTO();
+		chDTO.setName(name);
 		
-		return ch;
+		chDTO.setDistance(distance);
+		chDTO.setTime(time);
+		chDTO.setEnd(end);
+		
+		return chDTO;
 		
 		
 	}
-	public Session createSession(String title, String sport,int distance,Date start,Date end,User Owner,long duration) {
-		Session s= new Session();
+	public SessionDTO createSession(String title, String sport,int distance,Date start,Date end,long token,long duration) {
+		SessionDTO s= new SessionDTO();
 		s.setDistance(distance);
 		s.setDuration(duration);
 		s.setEnd(end);
 		s.setStart(start);
 		s.setSport(sport);
-		s.setOwner(Owner);
+		
 		s.setTitle(title);
 		return s;
 	}
-	public User RegisterUser(String nickname,String password) {
-		User u=new User();
+	public UserDTO RegisterUser(String nickname,String password) {
+		UserDTO u=new UserDTO();
 		u.setChallenges(null);
 		u.setNickname(nickname);
 		u.setEmail(nickname);

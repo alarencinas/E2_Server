@@ -17,6 +17,7 @@ public class SessionDTO implements Serializable {
 	private int distance;
 	private Date start;
 	private Date end;
+	private User owner;
 	
 	private long duration;
 	public String getTitle() {
@@ -78,6 +79,11 @@ public class SessionDTO implements Serializable {
 		return result.toString();		
 	}
 	
-	
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 	
 }
