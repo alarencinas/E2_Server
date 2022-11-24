@@ -114,7 +114,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		s.setTitle(title);
 		return s;
 	}else {
-		throw new RemoteException("create session fails!");
+		throw new RemoteException("create session fails!");}
 	}
 	public UserDTO RegisterUser(String nickname,String password) {
 		UserDTO u=new UserDTO();
