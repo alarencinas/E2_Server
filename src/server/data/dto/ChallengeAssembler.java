@@ -6,29 +6,26 @@ import server.data.domain.Challenge;
 import server.data.domain.Session;
 public class ChallengeAssembler {
 	private static ChallengeAssembler instance;
-	private ChallengeAssembler() { }
+	public ChallengeAssembler() { }
 	public static ChallengeAssembler getInstance() {
 		if(instance== null) {
 			instance=new ChallengeAssembler();
 		}
 		return instance;
 	}
-	public ChallengeDTO challengeToDTO(Challenge challenge) {
-		ChallengeDTO dto= new ChallengeDTO();
-		dto.setName(challenge.getName());
-		dto.setDistance(challenge.getDistance());
-		dto.setStart(challenge.getStart());
-		dto.setEnd(challenge.getEnd());
-		dto.setTime(challenge.getTime());
-		return dto;
-		
-		
-	}
-	public List<ChallengeDTO> challengeToDTO(List<Challenge> challenges){
-		List<ChallengeDTO> dtos= new ArrayList<>();
-		for(Challenge challenge : challenges) {
-			dtos.add(this.challengeToDTO(challenge));
-		}
-		return dtos;
+	
+	public static ChallengeDTO challengeToDTO(Challenge challenge){
+		ChallengeDTO chdto= new ChallengeDTO();
+		chdto.setDistance(challenge.getDistance());
+		chdto.setEnd(challenge.getEnd());
+		chdto.setName(challenge.getName());
+		chdto.setSport(challenge.getSport());
+		chdto.setStart(challenge.getStart());
+		chdto.setTime(challenge.getTime());
+		UserDTO userdto = new UserDTO();
+		userdto.setNickname(challenge.getOwner().getNickname());
+		userdto.setEmail(challenge.getOwner().getEmail());
+		chdto.setOwner(userdto);
+		return chdto;
 	}
 }

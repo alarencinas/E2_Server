@@ -15,8 +15,8 @@ public class Session {
 	private String sport;
 	private int distance;
 	private Date start;
-	private Date end;
-	private User owner;
+	
+
 	private long duration;
 	
 	
@@ -44,18 +44,8 @@ public class Session {
 	public void setStart(Date start) {
 		this.start = start;
 	}
-	public Date getEnd() {
-		return end;
-	}
-	public void setEnd(Date end) {
-		this.end = end;
-	}
-	public User getOwner() {
-		return owner;
-	}
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
+	
+	
 	public long getDuration() {
 		return duration;
 	}
@@ -74,8 +64,7 @@ public class Session {
 		result.append(numberFormatter.format(this.distance));
 		result.append("km # Fecha de Inicio: ");
 		result.append(dateFormatter.format(this.start));
-		result.append("Fecha de Fin:");
-		result.append(dateFormatter.format(this.end));
+		
 		result.append(" Duracion:");
 		result.append(numberFormatter.format(this.duration));
 		

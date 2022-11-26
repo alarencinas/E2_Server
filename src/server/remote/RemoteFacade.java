@@ -1,6 +1,8 @@
 package server.remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import server.data.domain.User;
 import server.data.dto.ChallengeAssembler;
 import server.data.dto.SessionAssembler;
 import server.data.dto.ChallengeDTO;
+import server.data.dto.LoginUserTypeDTO;
 import server.data.dto.SessionDTO;
 import server.data.dto.UserDTO;
 import server.services.LoginAppService;
@@ -27,11 +30,11 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 	public RemoteFacade() throws RemoteException {
 		super();		
 	}
-	public synchronized long login(String email, String password) throws RemoteException {
+	public synchronized long login(String email, String password,String nick,LoginUserTypeDTO usertype) throws RemoteException {
 		System.out.println(" * RemoteFacade login(): " + email + " / " + password);
 				
 		//Perform login() using LoginAppService
-		User user = loginService.login(email, password);
+		User user = loginService.login(email, password, nick, usertype);
 			
 		//If login() success user is stored in the Server State
 		if (user != null) {
@@ -59,87 +62,37 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		}
 		//¿HAcer mas Tarde con CrApp?
 	}
-	public List<SessionDTO> getSessions() throws RemoteException{
-		System.out.println(" * RemoteFacade getSessions()");
-		//Get Sessions using CrAppService
-		List<Session> sessions= crService.getSessions();
-		if(sessions!=null) {
-			return SessionAssembler.getInstance().sessionToDTO(sessions);
-			
-		}else {
-			throw new RemoteException("getSessions() fails");
-		}
-	}
-	public List<ChallengeDTO> getChallenges() throws RemoteException{
-		System.out.println(" * RemoteFacade getChallenges()");
-		//Get Sessions using CrAppService
-		List<Challenge> challenges= crService.getChallenges();
-		if(challenges!=null) {
-			return ChallengeAssembler.getInstance().challengeToDTO(challenges);
-			
-		}else {
-			throw new RemoteException("getChallenges() fails");
-		}
 	
+	public List<ChallengeDTO> getChallenges(String sport) throws RemoteException{
+		ArrayList<ChallengeDTO> ch= crService.getChallenges(sport);
+	return ch;
 	}
-	public ChallengeDTO createChallenge(String name,Date start, Date end, int distance, long time, long token ) throws RemoteException {
-		
+	@Override
+	public float challAcomplished(UserDTO user, ChallengeDTO challenge) throws RemoteException {
+		return crService.challAcomplished(user, challenge);
+	}
+	@Override
+	public void createChallenge(UserDTO user, ChallengeDTO challenge) throws RemoteException {
+		 crService.createChallenge(user, challenge);
+	}
 
-		if (this.serverState.containsKey(token)) {
-			//Logout means remove the User from Server State
-		
-		
-		ChallengeDTO chDTO = new ChallengeDTO();
-		chDTO.setName(name);
-		
-		chDTO.setDistance(distance);
-		chDTO.setTime(time);
-		chDTO.setEnd(end);
-		
-		return chDTO;}else {
-			throw new RemoteException("create challenge fails!");
-		}
-		
+		@Override
+	public void DelChallenge(String title) throws RemoteException {
+		crService.DelChallenge(title);
 		
 	}
-	public SessionDTO createSession(String title, String sport,int distance,Date start,Date end,long token,long duration)  throws RemoteException {
-		if (this.serverState.containsKey(token)) {
-		SessionDTO s= new SessionDTO();
-		s.setDistance(distance);
-		s.setDuration(duration);
-		s.setEnd(end);
-		s.setStart(start);
-		s.setSport(sport);
-		
-		s.setTitle(title);
-		return s;
-	}else {
-		throw new RemoteException("create session fails!");}
-	}
-	public UserDTO RegisterUser(String nickname,String password) {
-		UserDTO u=new UserDTO();
-		u.setChallenges(null);
-		u.setNickname(nickname);
-		u.setEmail(nickname);
-		u.setPassword(password);
-		u.setSessions(null);
-		return u;
+	
+	@Override
+	public UserDTO getUser(String email, String password) throws RemoteException, ParseException {
+		return loginService.getUser(email, password);
 	}
 	
 	
-	public boolean makeCr(long token,String sessionorchallengetitle) throws RemoteException {
-		System.out.println(" * RemoteFacade makeCr session or challenge :" + sessionorchallengetitle);
-		if(this.serverState.containsKey(token)) {
-			//Make the Cr using Cr Application Service
-			if(crService.makeCr(this.serverState.get(token), sessionorchallengetitle )) {
-				return true;
-			}else {
-				throw new RemoteException("makeCr() fails!");
-			}
-		}else {
-			throw new RemoteException("To place a session you must first log in");
-		}
-	}
+	
+	
+	
+	
+	
 	//public void signUp(long token, Challenge challenge) {
 	//	Owner.addChallenge(challenge);
 		

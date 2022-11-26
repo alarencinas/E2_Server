@@ -16,8 +16,6 @@ public class SessionDTO implements Serializable {
 	private String sport;
 	private int distance;
 	private Date start;
-	private Date end;
-	private User owner;
 	
 	private long duration;
 	public String getTitle() {
@@ -44,12 +42,7 @@ public class SessionDTO implements Serializable {
 	public void setStart(Date start) {
 		this.start = start;
 	}
-	public Date getEnd() {
-		return end;
-	}
-	public void setEnd(Date end) {
-		this.end = end;
-	}
+	
 	
 	public long getDuration() {
 		return duration;
@@ -71,19 +64,13 @@ public class SessionDTO implements Serializable {
 		result.append(numberFormatter.format(this.distance));
 		result.append("km # Fecha de Inicio: ");
 		result.append(dateFormatter.format(this.start));
-		result.append("Fecha de Fin:");
-		result.append(dateFormatter.format(this.end));
+		
+		
 		result.append(" Duracion:");
 		result.append(numberFormatter.format(this.duration));
 		
 		return result.toString();		
 	}
 	
-	public User getOwner() {
-		return owner;
-	}
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
 	
 }

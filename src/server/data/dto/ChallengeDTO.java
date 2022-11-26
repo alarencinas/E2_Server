@@ -15,7 +15,8 @@ public class ChallengeDTO implements Serializable{
 	private Date end;
 	private int distance;
 	private float time;
-	private User owner;
+	private String sport;
+	private UserDTO owner;
 	
 	public String getName() {
 		return name;
@@ -65,10 +66,17 @@ public class ChallengeDTO implements Serializable{
 		
 		return result.toString();
 	}
-	public User getOwner() {
+	public String getSport() {
+		return sport;
+	}
+	public void setSport(String sport) {
+		this.sport = sport;
+	}
+	public UserDTO getOwner() {
 		return owner;
 	}
-	public void setOwner(User owner) {
+	public void setOwner(UserDTO owner) {
 		this.owner = owner;
 	}
+
 }

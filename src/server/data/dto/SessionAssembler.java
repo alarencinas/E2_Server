@@ -5,7 +5,7 @@ import server.data.domain.Session;
 public class SessionAssembler {
 	private static SessionAssembler instance;
 
-	private SessionAssembler() { }
+	public SessionAssembler() { }
 	public static SessionAssembler getInstance() {
 		if(instance==null) {
 			instance=new SessionAssembler();
@@ -18,7 +18,7 @@ public class SessionAssembler {
 		dto.setDistance(session.getDistance());
 		dto.setDuration(session.getDuration());
 		dto.setStart(session.getStart());
-		dto.setEnd(session.getEnd());
+		
 		dto.setSport(dto.getSport());
 		dto.setTitle(session.getTitle());
 		return dto;

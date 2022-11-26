@@ -15,6 +15,7 @@ public class Challenge {
 	private int distance;
 	private float time;
 	private User owner;
+	private String sport;
 	
 	
 	public String getName() {
@@ -62,21 +63,28 @@ public class Challenge {
 		result.append(numberFormatter.format(this.distance));
 		result.append(" TIME:");
 		result.append(numberFormatter.format(this.time));
+		result.append(this.owner.getNickname());
 		
 		return result.toString();
 	}
-	public boolean equals(Object obj) {
-		if (this.getClass().getName().equals(obj.getClass().getName())) {
-			return this.name.equals(((Challenge)obj).name);
-		}
-		
-		return false;
-	}
+//	public boolean equals(Object obj) {
+//		if (this.getClass().getName().equals(obj.getClass().getName())) {
+//			return this.name.equals(((Challenge)obj).name);
+//		}
+//		
+//		return false;
+//	}
 	public User getOwner() {
 		return owner;
 	}
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+	public String getSport() {
+		return sport;
+	}
+	public void setSport(String sport) {
+		this.sport = sport;
 	}
 	
 }
