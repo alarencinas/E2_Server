@@ -18,6 +18,14 @@ public class ChallengeDTO implements Serializable{
 	private String sport;
 	private UserDTO owner;
 	
+	public ChallengeDTO(String name2, Date start2, Date end2, int dist, float time2, UserDTO owner2) {
+		this.name = name2;
+		this.start = start2;
+		this.end = end2;
+		this.distance = dist;
+		this.time = time2;
+		this.owner = owner2;
+	}
 	public String getName() {
 		return name;
 	}
