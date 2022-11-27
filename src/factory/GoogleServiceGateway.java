@@ -2,8 +2,8 @@ package factory;
 
 import java.rmi.Naming;
 
+
 import Remote.IGoogle;
-import Remote.GoogleService;
 public class GoogleServiceGateway {
 	private IGoogle GoogleService;
 	private static GoogleServiceGateway instance;
