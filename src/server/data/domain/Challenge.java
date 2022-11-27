@@ -55,11 +55,11 @@ public class Challenge {
 		NumberFormat numberFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault()); 
 
 		result.append(this.name);
-		result.append("Fecha de Inicio:");
+		result.append("Start:");
 		result.append(dateFormatter.format(this.start));
-		result.append(" Fecha de Fin:");
+		result.append(" End:");
 		result.append(dateFormatter.format(this.end));
-		result.append(" Distancia:");
+		result.append(" Distance:");
 		result.append(numberFormatter.format(this.distance));
 		result.append(" TIME:");
 		result.append(numberFormatter.format(this.time));

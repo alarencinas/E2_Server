@@ -62,11 +62,11 @@ public class SessionDTO implements Serializable {
 		result.append(this.sport);
 		result.append("/");
 		result.append(numberFormatter.format(this.distance));
-		result.append("km # Fecha de Inicio: ");
+		result.append("km # Start: ");
 		result.append(dateFormatter.format(this.start));
 		
 		
-		result.append(" Duracion:");
+		result.append(" Duration:");
 		result.append(numberFormatter.format(this.duration));
 		
 		return result.toString();		
