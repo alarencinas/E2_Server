@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import factory.FacebookSocketClient;
+import factory.GoogleServiceGateway;
 import server.data.domain.Challenge;
 import server.data.domain.LoginUserType;
 import server.data.domain.Session;
@@ -19,6 +21,8 @@ public class LoginAppService {
 	private List<User> users= new ArrayList<>();
 	private UserAssembler userassembler = new UserAssembler();
 	private SessionAssembler sessionAssembler= new SessionAssembler();
+	private GoogleServiceGateway Googleservice = new GoogleServiceGateway();
+	private FacebookSocketClient client= new FacebookSocketClient("0.0.0.0", 35600);
 	
 	public UserDTO getUser(String email, String pass) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -46,35 +50,150 @@ public class LoginAppService {
 		sessions.add(s1);
 		sessions.add(s2);
 		user.setSessions(sessions);
+		user.setUsertype(LoginUserType.Email);
+		List<Challenge> challenges= new ArrayList<>();
+		user.setChallenges(challenges);
 		users.add(user);
+		//FaceBook User
+		User userF= new User();
+		userF.setEmail("billlie@hotmail.com");
+		userF.setNickname("Bill");
+		userF.setUsertype(LoginUserType.Facebook);
+		List<Challenge> challenges1= new ArrayList<>();
+		userF.setChallenges(challenges1);
+		//Sessions
+		Session s3= new Session();
+		//S3
+		s3.setTitle("Fighting");
+		s3.setDuration(50);
+		s3.setDistance(120);
+		s3.setStart(format.parse("08/10/2022"));
+		s3.setSport("Boxing");
+		//S4
+		Session s4= new Session();
+		s4.setTitle("Jumping");
+		s4.setDuration(120);
+		s4.setDistance(10);
+		s4.setStart(format.parse("07/07/2022"));
+		s4.setSport("Athletism");
+		ArrayList<Session> sessions2= new ArrayList<>();
+		sessions2.add(s3);
+		sessions2.add(s4);
+		userF.setSessions(sessions2);
+		users.add(userF);
+		//Google User
+		User userG=new User();
+		userG.setEmail("astro@gmail.com");
+		userG.setNickname("Astro");
+		userG.setUsertype(LoginUserType.Google);
+		Session s5 = new Session();
+		s5.setTitle("Sprint");
+		s5.setDuration(50);
+		s5.setDistance(120);
+		s5.setStart(format.parse("03/06/2022"));
+		s5.setSport("Athletism");
+		Session s6= new Session();
+		s6.setTitle("HighJump");
+		s6.setDuration(50);
+		s6.setDistance(120);
+		s6.setStart(format.parse("03/06/2022"));
+		s6.setSport("Natation");
+		ArrayList<Session> sessions3= new ArrayList<>();
+		sessions3.add(s5);
+		sessions3.add(s6);
+		userG.setSessions(sessions3);
+		List<Challenge> challenges3= new ArrayList<>();
+		userG.setChallenges(challenges3);
+		users.add(userG);
+		
+		
+		
 		for(User u:users) {
-			if(u.checkPassword(pass)&& u.getEmail().matches(email)) {
+			if(u.getUsertype()== LoginUserType.Email) {
+			if(u.getEmail().matches(email)&& u.checkPassword(pass)) {
+				List <SessionDTO> sessionsDTO= new ArrayList<>();
 				userdto.setNickname(u.getNickname());
 				userdto.setEmail(u.getEmail());
-				List<SessionDTO> sessionsDTO= new ArrayList<>();
-				for(Session s: u.getSessions()) {
+				for(Session s : u.getSessions()) {
 					sessionsDTO.add(sessionAssembler.sessionToDTO(s));
 					
 				}
 				userdto.setSessions(sessionsDTO);
 				userdto.setUsertype(LoginUserTypeDTO.Email);
 				List<ChallengeDTO> challengesDTO= new ArrayList<>();
-				for(Challenge ch: user.getChallenges()) {
-					ChallengeDTO c= new ChallengeDTO() ;
-					c.setDistance(ch.getDistance());
-					c.setEnd(ch.getEnd());
-					c.setName(ch.getName());
-					c.setSport(ch.getName());
-					c.setTime(ch.getTime());
-					c.setStart(ch.getStart());
-					c.setOwner(UserAssembler.userToDTO(ch.getOwner()));
-					challengesDTO.add(c);
-							
+				for(Challenge ch: u.getChallenges() ) {
+					ChallengeDTO chdto= new ChallengeDTO();
+					chdto.setOwner(userassembler.userToDTO(ch.getOwner()));
+					chdto.setDistance(ch.getDistance());
+					chdto.setName(ch.getName());
+					chdto.setStart(ch.getStart());
+					chdto.setEnd(ch.getEnd());
+					chdto.setSport(ch.getSport());
+					chdto.setTime(ch.getTime());
+					challengesDTO.add(chdto);
+					
+					
 				}
 				userdto.setChallenges(challengesDTO);
+				userdto.setUsertype(LoginUserTypeDTO.Email);
 				return userdto;
 				
 				
+			}
+			}else if(user.getUsertype() == LoginUserType.Google) {
+				if(Googleservice.checkUser(email, pass)) {
+					List <SessionDTO> sessionsDTO= new ArrayList<>();
+					userdto.setEmail(user.getEmail());
+					userdto.setNickname(user.getNickname());
+					for(Session s : user.getSessions()) {
+						sessionsDTO.add(sessionAssembler.sessionToDTO(s));
+						
+					}
+					userdto.setSessions(sessionsDTO);
+					userdto.setUsertype(LoginUserTypeDTO.Google);
+					List<ChallengeDTO> challengesDTO= new ArrayList<>();
+					for(Challenge ch: u.getChallenges()) {
+						ChallengeDTO chdto= new ChallengeDTO();
+						chdto.setOwner(userassembler.userToDTO(ch.getOwner()));
+						chdto.setDistance(ch.getDistance());
+						chdto.setName(ch.getName());
+						chdto.setStart(ch.getStart());
+						chdto.setEnd(ch.getEnd());
+						chdto.setSport(ch.getSport());
+						chdto.setTime(ch.getTime());
+						challengesDTO.add(chdto);
+					}
+					userdto.setChallenges(challengesDTO);
+					return userdto;
+					
+				}
+			}else if(user.getUsertype() == LoginUserType.Facebook) {
+				if(client.checkUser(email, pass)) {
+					List <SessionDTO> sessionsDTO= new ArrayList<>();
+					userdto.setEmail(user.getEmail());
+					userdto.setNickname(user.getNickname());
+					for(Session s : user.getSessions()) {
+						sessionsDTO.add(sessionAssembler.sessionToDTO(s));
+						
+					}
+					userdto.setSessions(sessionsDTO);
+					userdto.setUsertype(LoginUserTypeDTO.Facebook);
+					List<ChallengeDTO> challengesDTO= new ArrayList<>();
+					for(Challenge ch: u.getChallenges()) {
+						ChallengeDTO chdto= new ChallengeDTO();
+						chdto.setOwner(userassembler.userToDTO(ch.getOwner()));
+						chdto.setDistance(ch.getDistance());
+						chdto.setName(ch.getName());
+						chdto.setStart(ch.getStart());
+						chdto.setEnd(ch.getEnd());
+						chdto.setSport(ch.getSport());
+						chdto.setTime(ch.getTime());
+						challengesDTO.add(chdto);
+					}
+					userdto.setChallenges(challengesDTO);
+					return userdto;
+					
+				}
 			}
 		}
 		return userdto;

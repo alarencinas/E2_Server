@@ -23,11 +23,5 @@ public class SessionAssembler {
 		dto.setTitle(session.getTitle());
 		return dto;
 	}
-	public List<SessionDTO> sessionToDTO(List<Session> sessions){
-		List<SessionDTO> dtos= new ArrayList<>();
-		for(Session session : sessions) {
-			dtos.add(this.sessionToDTO(session));
-		}
-		return dtos;
-	}
+
 }
