@@ -56,8 +56,8 @@ public class LoginAppService {
 		users.add(user);
 		//FaceBook User
 		User userF= new User();
-		userF.setEmail("billlie@hotmail.com");
-		userF.setNickname("Bill");
+		userF.setEmail("felipe@gmail.com");
+		userF.setNickname("Felipe");
 		userF.setUsertype(LoginUserType.Facebook);
 		List<Challenge> challenges1= new ArrayList<>();
 		userF.setChallenges(challenges1);
@@ -83,8 +83,8 @@ public class LoginAppService {
 		users.add(userF);
 		//Google User
 		User userG=new User();
-		userG.setEmail("astro@gmail.com");
-		userG.setNickname("Astro");
+		userG.setEmail("German@gmail.com");
+		userG.setNickname("German");
 		userG.setUsertype(LoginUserType.Google);
 		Session s5 = new Session();
 		s5.setTitle("Sprint");

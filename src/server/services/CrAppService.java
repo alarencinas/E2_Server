@@ -30,8 +30,8 @@ public class CrAppService {
 		user0.setPassword("$!9PhNz,");
 		
 		User user1 = new User();
-		user1.setEmail("sample@gmail.com");
-		user1.setNickname("buyer33");		
+		user1.setEmail("antonio@gmail.com");
+		user1.setNickname("antonio33");		
 		user1.setPassword("hqc`}3Hb");
 	
 		
