@@ -81,4 +81,5 @@ public class User {
 	public void setUsertype(LoginUserType usertype) {
 		this.usertype = usertype;
 	}
+	
 }	

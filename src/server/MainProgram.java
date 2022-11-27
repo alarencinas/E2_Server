@@ -23,5 +23,9 @@ public class MainProgram {
 			System.err.println(" # Strava Server Exception: " + ex.getMessage());
 			ex.printStackTrace();
 		}
+		if (args.length < 2) {
+			System.err.println(" # Usage: Trans. SocketClient [SERVER IP] [PORT] ");
+			System.exit(1);
+		}
 	}
 }

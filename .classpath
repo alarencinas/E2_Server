@@ -16,5 +16,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/E2_FacebookServer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/E2_GoogleServer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
