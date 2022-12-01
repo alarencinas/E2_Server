@@ -20,8 +20,8 @@ import server.data.dto.UserDTO;
 public class LoginAppService {
 	private List<User> users= new ArrayList<>();
 	private UserAssembler userassembler = new UserAssembler();
-	private SessionAssembler sessionAssembler= new SessionAssembler();
-	private GoogleServiceGateway Googleservice = new GoogleServiceGateway();
+	private SessionAssembler sessionAssembler= new SessionAssembler(); 	//TODO CALLING THE CONSTRUCTORS DIRECTLY ,NOT THE LOGINFACTORY
+	private GoogleServiceGateway Googleservice = new GoogleServiceGateway(); //TODO NOT NULLPOINTER BECAUSE WE DECLARE DE CONSTRUCTORS INSTEAD OF THE LOGINFACTORY
 	private FacebookSocketClient client= new FacebookSocketClient("0.0.0.0", 35600);
 	
 	public UserDTO getUser(String email, String pass) throws ParseException {
@@ -200,9 +200,9 @@ public class LoginAppService {
 	}
 	
 	
-	public User login(String nickname,String email, String password, LoginUserTypeDTO usertype) {
-		//TODO: Get User using DAO and check 		
-		if(usertype.equals(LoginUserTypeDTO.Google)||usertype.equals(LoginUserTypeDTO.Facebook)) {
+	public User login(String nickname,String email, String password, LoginUserTypeDTO usertype) { 
+		//TODO HERE HAS TO BE THE LOGINGATEWAY	
+		if(usertype.equals(LoginUserTypeDTO.Google)||usertype.equals(LoginUserTypeDTO.Facebook)) {//TODO ESTE IF THEN ELSE ES LO DE LOGINFACTORY
 			User user = new User();
 			user.setNickname(nickname);
 			user.setEmail(email);

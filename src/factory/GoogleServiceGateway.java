@@ -4,12 +4,12 @@ import java.rmi.Naming;
 
 
 import Remote.IGoogle;
-public class GoogleServiceGateway {
+public class GoogleServiceGateway {	//TODO IMPLEMENTS THE ILOGINGATEWAY INTERFACE
 	private IGoogle GoogleService;
 	private static GoogleServiceGateway instance;
 	public GoogleServiceGateway() {
 		try {		
-			String URL = "//127.0.0.1:1099/E2_GoogleServer";
+			String URL = "//127.0.0.1:1099/E2_GoogleServer";//TODO HARDCODE IT??
 			this.GoogleService = (IGoogle) Naming.lookup(URL);
 		} catch (Exception ex) {
 			System.err.println("# Error locating remote facade: " + ex);
