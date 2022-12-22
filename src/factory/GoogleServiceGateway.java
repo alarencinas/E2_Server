@@ -1,10 +1,9 @@
 package factory;
 
 import java.rmi.Naming;
-
-
 import Remote.IGoogle;
-public class GoogleServiceGateway {	//TODO IMPLEMENTS THE ILOGINGATEWAY INTERFACE
+
+public class GoogleServiceGateway implements ILoginGateway{	
 	private IGoogle GoogleService;
 	private static GoogleServiceGateway instance;
 	public GoogleServiceGateway() {

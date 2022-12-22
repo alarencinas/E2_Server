@@ -10,7 +10,7 @@ public class UserDTO implements Serializable{
 		private static final long serialVersionUID = 1L;	
 		private String nickname;
 		private String email;
-		
+		private String password;
 		private LoginUserTypeDTO usertype;
 		private List<ChallengeDTO> challenges= new ArrayList<>();
 		private List<SessionDTO> sessions= new ArrayList<>();
@@ -48,12 +48,17 @@ public class UserDTO implements Serializable{
 		}
 		public  List<SessionDTO> getSessions() {
 			return sessions;
-		   
 		}
 		public LoginUserTypeDTO getUsertype() {
 			return usertype;
 		}
 		public void setUsertype(LoginUserTypeDTO usertype) {
 			this.usertype = usertype;
+		}
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
 		}
 }
