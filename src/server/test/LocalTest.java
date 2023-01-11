@@ -31,7 +31,7 @@ public class LocalTest {
 		s1.setTitle("Running");
 		s1.setDuration(30);
 		s1.setDistance(100);
-		s1.setStart(format.parse("05/09/2022"));
+		s1.setStart("05/09/2022");
 		s1.setSport("Athletism");
 		ArrayList<Session> sessions2= new ArrayList<>();
 		sessions2.add(s1);

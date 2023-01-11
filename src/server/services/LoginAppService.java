@@ -1,16 +1,23 @@
 package server.services;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import server.data.dao.ChallengeDAO;
+import server.data.dao.SessionDAO;
+import server.data.dao.UserDAO;
 import factory.FacebookSocketClient;
 import factory.GoogleServiceGateway;
 import server.data.domain.Challenge;
 import server.data.domain.LoginUserType;
 import server.data.domain.Session;
 import  server.data.domain.User;
+import server.data.dto.ChallengeAssembler;
 import server.data.dto.ChallengeDTO;
 import server.data.dto.LoginUserTypeDTO;
 import server.data.dto.SessionAssembler;
@@ -36,14 +43,14 @@ public class LoginAppService {
 		s1.setTitle("Running");
 		s1.setDuration(30);
 		s1.setDistance(100);
-		s1.setStart(format.parse("05/09/2022"));
+		s1.setStart("05/09/2022");
 		s1.setSport("Athletism");
 		//S2
 		Session s2=new Session();
 		s2.setTitle("Swiming");
 		s2.setDuration(30);
 		s2.setDistance(100);
-		s2.setStart(format.parse("01/12/2022"));
+		s2.setStart("01/12/2022");
 		s2.setSport("Natation");
 		//Sessions
 		ArrayList<Session> sessions= new ArrayList<>();
@@ -67,14 +74,14 @@ public class LoginAppService {
 		s3.setTitle("Fighting");
 		s3.setDuration(50);
 		s3.setDistance(120);
-		s3.setStart(format.parse("08/10/2022"));
+		s3.setStart("08/10/2022");
 		s3.setSport("Boxing");
 		//S4
 		Session s4= new Session();
 		s4.setTitle("Jumping");
 		s4.setDuration(120);
 		s4.setDistance(10);
-		s4.setStart(format.parse("07/07/2022"));
+		s4.setStart("07/07/2022");
 		s4.setSport("Athletism");
 		ArrayList<Session> sessions2= new ArrayList<>();
 		sessions2.add(s3);
@@ -90,13 +97,13 @@ public class LoginAppService {
 		s5.setTitle("Sprint");
 		s5.setDuration(50);
 		s5.setDistance(120);
-		s5.setStart(format.parse("03/06/2022"));
+		s5.setStart("03/06/2022");
 		s5.setSport("Athletism");
 		Session s6= new Session();
 		s6.setTitle("HighJump");
 		s6.setDuration(50);
 		s6.setDistance(120);
-		s6.setStart(format.parse("03/06/2022"));
+		s6.setStart("03/06/2022");
 		s6.setSport("Natation");
 		ArrayList<Session> sessions3= new ArrayList<>();
 		sessions3.add(s5);
@@ -106,9 +113,9 @@ public class LoginAppService {
 		userG.setChallenges(challenges3);
 		users.add(userG);
 		
+		UserDTO userf= new UserDTO();
 		
-		
-		for(User u:users) {
+		for(User u:UserDAO.getInstance().getAll()) {
 			if(u.getUsertype()== LoginUserType.Email) {
 			if(u.getEmail().matches(email)&& u.checkPassword(pass)) {
 				List <SessionDTO> sessionsDTO= new ArrayList<>();
@@ -122,16 +129,7 @@ public class LoginAppService {
 				userdto.setUsertype(LoginUserTypeDTO.Email);
 				List<ChallengeDTO> challengesDTO= new ArrayList<>();
 				for(Challenge ch: u.getChallenges() ) {
-					ChallengeDTO chdto= new ChallengeDTO();
-					chdto.setOwner(userassembler.userToDTO(ch.getOwner()));
-					chdto.setDistance(ch.getDistance());
-					chdto.setName(ch.getName());
-					chdto.setStart(ch.getStart());
-					chdto.setEnd(ch.getEnd());
-					chdto.setSport(ch.getSport());
-					chdto.setTime(ch.getTime());
-					challengesDTO.add(chdto);
-					
+					challengesDTO.add(ChallengeAssembler.challengeToDTO(ch));
 					
 				}
 				userdto.setChallenges(challengesDTO);
@@ -140,8 +138,8 @@ public class LoginAppService {
 				
 				
 			}
-			}else if(user.getUsertype() == LoginUserType.Google) {
-				if(Googleservice.checkUser(email, pass)) {
+			}else if(user.getUsertype() == LoginUserType.Google ) {
+				if(Googleservice.checkUser(email, pass) && email.matches(user.getEmail())) {
 					List <SessionDTO> sessionsDTO= new ArrayList<>();
 					userdto.setEmail(user.getEmail());
 					userdto.setNickname(user.getNickname());
@@ -152,16 +150,9 @@ public class LoginAppService {
 					userdto.setSessions(sessionsDTO);
 					userdto.setUsertype(LoginUserTypeDTO.Google);
 					List<ChallengeDTO> challengesDTO= new ArrayList<>();
-					for(Challenge ch: u.getChallenges()) {
-						ChallengeDTO chdto= new ChallengeDTO();
-						chdto.setOwner(userassembler.userToDTO(ch.getOwner()));
-						chdto.setDistance(ch.getDistance());
-						chdto.setName(ch.getName());
-						chdto.setStart(ch.getStart());
-						chdto.setEnd(ch.getEnd());
-						chdto.setSport(ch.getSport());
-						chdto.setTime(ch.getTime());
-						challengesDTO.add(chdto);
+					for(Challenge ch: u.getChallenges() ) {
+						challengesDTO.add(ChallengeAssembler.challengeToDTO(ch));
+						
 					}
 					userdto.setChallenges(challengesDTO);
 					return userdto;
@@ -179,16 +170,9 @@ public class LoginAppService {
 					userdto.setSessions(sessionsDTO);
 					userdto.setUsertype(LoginUserTypeDTO.Facebook);
 					List<ChallengeDTO> challengesDTO= new ArrayList<>();
-					for(Challenge ch: u.getChallenges()) {
-						ChallengeDTO chdto= new ChallengeDTO();
-						chdto.setOwner(userassembler.userToDTO(ch.getOwner()));
-						chdto.setDistance(ch.getDistance());
-						chdto.setName(ch.getName());
-						chdto.setStart(ch.getStart());
-						chdto.setEnd(ch.getEnd());
-						chdto.setSport(ch.getSport());
-						chdto.setTime(ch.getTime());
-						challengesDTO.add(chdto);
+					for(Challenge ch: u.getChallenges() ) {
+						challengesDTO.add(ChallengeAssembler.challengeToDTO(ch));
+						
 					}
 					userdto.setChallenges(challengesDTO);
 					return userdto;
@@ -225,6 +209,81 @@ public class LoginAppService {
 		
 		
 		
+	}
+	public void createUser(LoginUserTypeDTO type, String nickname,String password,String email) {
+		User user= new User();
+		user.setNickname(nickname);
+		user.setEmail(email);
+		user.setPassword(password);
+		user.setChallenges(new ArrayList<>());
+		user.setSessions(new ArrayList<>());
+		if(type.equals(LoginUserTypeDTO.Email)) {
+			user.setUsertype(LoginUserType.Email);
+			UserDAO.getInstance().save(user);
+		}else if(type.equals(LoginUserTypeDTO.Google)) {
+			if(Googleservice.checkUser(email, password)) {
+				user.setUsertype(LoginUserType.Google);
+				UserDAO.getInstance().save(user);
+				System.out.println("GOOGLE USER");
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "this GOOGLE user does not exists");
+				
+			}
+			
+		}else if(type.equals(LoginUserTypeDTO.Facebook)) {
+			if(Googleservice.checkUser(email, password)) {
+				user.setUsertype(LoginUserType.Facebook);
+				UserDAO.getInstance().save(user);
+				System.out.println("Facebook USER");
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "this FACEBOOK user does not exists");
+				
+			}
+			
+		}
+	}
+	
+	public UserDTO updateUser(UserDTO user, CrAppService cr) {
+		User user1 = new User();
+		for(User u: UserDAO.getInstance().getAll()) {
+			if(u.getNickname().matches(user.getNickname())) {
+				user1=u;
+			}
+			
+		}
+	 UserDAO.getInstance().delete(UserDAO.getInstance().find(user.getNickname()));
+	 user1.setSessions(new ArrayList<>());
+	 for(SessionDTO sessionDTO: user.getSessions()) {
+		 Session s = new Session();
+		 s.setDistance(sessionDTO.getDistance());
+		 s.setDuration(sessionDTO.getDuration());
+		 s.setSport(sessionDTO.getSport());
+		 s.setStart(sessionDTO.getStart());
+		 s.setTitle(sessionDTO.getTitle());
+		 user1.getSessions().add(s);
+		 
+		 
+	 }
+	 user1.setChallenges(new ArrayList<>());
+	 for(ChallengeDTO chDTO: user.getChallenges()) {
+		 Challenge ch= new Challenge();
+		 User owner = new User();
+		 owner.setNickname(chDTO.getOwner().getNickname());
+		 ch.setOwner(owner);
+		 ch.setDistance(chDTO.getDistance());
+		 ch.setEnd(chDTO.getEnd());
+		 ch.setName(chDTO.getName());
+		 ch.setSport(chDTO.getSport());
+		 ch.setStart(chDTO.getStart());
+		 ch.setTime(0);
+		 user1.getChallenges().add(ch);
+		 
+	 }
+	 	UserDAO.getInstance().save(user1);
+	 	UserAssembler uA= new UserAssembler();
+	 	return uA.userToDTO(user1, cr);
 	}
 	
 }

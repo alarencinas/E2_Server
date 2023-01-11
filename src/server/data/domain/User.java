@@ -1,13 +1,24 @@
 package server.data.domain;
 import java.util.ArrayList;
 import java.util.List;
+import javax.jdo.annotations.Discriminator;
+import javax.jdo.annotations.Inheritance;
+import javax.jdo.annotations.InheritanceStrategy;
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
+@PersistenceCapable(detachable="true")
+@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 public class User {
 	private String nickname;
 	private String password;
 	private String email;
 	private LoginUserType usertype;
+	@Persistent(defaultFetchGroup="true")
 	private List<Challenge> challenges= new ArrayList<>();
+	@Persistent(defaultFetchGroup="true")
 	private List<Session> sessions= new ArrayList<>();
 	
 	

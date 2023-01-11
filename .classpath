@@ -15,5 +15,15 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/commons-codec-1.15.jar"/>
 	<classpathentry kind="lib" path="lib/E2_GoogleServer.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/pruebas/javax.jdo-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/pruebas/javax.transaction-api-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/pruebas/jdo-api-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/pruebas/log4j.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/pruebas/mysql-connector-java-8.0.29.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/datanucleus-accessplatform-rdbms-6.0.1/lib/datanucleus-cache-6.0.0-release.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/datanucleus-accessplatform-rdbms-6.0.1/lib/datanucleus-core-6.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/datanucleus-accessplatform-rdbms-6.0.1/lib/datanucleus-api-jdo-6.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/datanucleus-accessplatform-rdbms-6.0.1/lib/datanucleus-jdo-query-6.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javier Ibarra/datanucleus-accessplatform-rdbms-6.0.1/lib/datanucleus-rdbms-6.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

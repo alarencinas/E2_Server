@@ -7,14 +7,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.PrimaryKey;
 
-
+@PersistenceCapable(detachable="true")
 public class Session {
 	
 	private String title;
 	private String sport;
 	private int distance;
-	private Date start;
+	private String start;
 	
 
 	private long duration;
@@ -38,10 +40,10 @@ public class Session {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
-	public Date getStart() {
+	public String getStart() {
 		return start;
 	}
-	public void setStart(Date start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
 	

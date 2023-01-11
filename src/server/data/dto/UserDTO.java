@@ -15,6 +15,15 @@ public class UserDTO implements Serializable{
 		private List<ChallengeDTO> challenges= new ArrayList<>();
 		private List<SessionDTO> sessions= new ArrayList<>();
 		
+		public String toString() {
+			StringBuffer result = new StringBuffer();
+			result.append(this.nickname);
+			result.append(" # '");
+			result.append(this.email);
+			result.append("' # Email: ");
+			result.append(this.email);
+			return result.toString();
+		}
 		
 		public List<ChallengeDTO> getChallenges() {
 			return challenges;

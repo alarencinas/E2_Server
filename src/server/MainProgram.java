@@ -28,4 +28,8 @@ public class MainProgram {
 			System.exit(1);
 		}
 	}
+	private static void Dbinit(){
+		
+		//Challenges
+	}
 }

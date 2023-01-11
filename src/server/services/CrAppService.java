@@ -6,10 +6,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import server.data.dao.ChallengeDAO;
+import server.data.dao.SessionDAO;
+import server.data.dao.UserDAO;
 import server.data.domain.*;
 import server.data.dto.ChallengeAssembler;
 import server.data.dto.ChallengeDTO;
+import server.data.dto.SessionAssembler;
 import server.data.dto.SessionDTO;
+import server.data.dto.UserAssembler;
 import server.data.dto.UserDTO;
 //TODO: Implement Singleton Pattern
 public class CrAppService {
@@ -40,18 +46,8 @@ public class CrAppService {
 		//Challenge 1
 		Challenge ch1= new Challenge();
 		ch1.setDistance(1000);
-		try {
-			ch1.setStart(format.parse("01/01/2022"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			ch1.setEnd(format.parse("31/12/2022"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ch1.setStart("01/01/2022");
+		ch1.setEnd("31/12/2022");
 		ch1.setName("SLOWRUN");
 		ch1.setSport("Athletism");
 		ch1.setTime(20);
@@ -59,18 +55,8 @@ public class CrAppService {
 		//Challenge 2
 		Challenge ch2= new Challenge();
 		ch2.setDistance(2000);
-		try {
-			ch2.setStart(format.parse("01/04/2022"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			ch2.setEnd(format.parse("31/12/2022"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ch2.setStart("01/04/2022");
+		ch2.setEnd("31/12/2022");
 		ch2.setName("DIVEFAST");
 		ch2.setSport("Natation");
 		ch2.setTime(60);
@@ -93,42 +79,123 @@ public class CrAppService {
 	//ChallAcomplished
 	public float challAcomplished(UserDTO user,ChallengeDTO challenge) {
 		float res=0;
-		for(SessionDTO session: user.getSessions()) {
-			float sdist=0;
-			float t = session.getDuration();
-			int time=(int)t;
-			Date d= addHoursToJavaUtilDate(session.getStart(),time);
-			if(session.getSport().matches(challenge.getSport()) && session.getStart().after(challenge.getStart()) && d.before(challenge.getEnd())){
-				sdist= sdist+ session.getDistance();
-				int chdist=challenge.getDistance();
-				res=((sdist*100)/chdist);
-				System.out.println("Chall accomplished by: "+res);
-				return res;
-				
-			}
-		}
-		System.out.println("Error");
+		
+		
+//		for(SessionDTO session: user.getSessions()) {
+//			float sdist=0;
+//			float t = session.getDuration();
+//			int time=(int)t;
+//			Date d= addHoursToJavaUtilDate(session.getStart(),time);
+//			if(session.getSport().matches(challenge.getSport()) && session.getStart().after(challenge.getStart()) && d.before(challenge.getEnd())){
+//				sdist= sdist+ session.getDistance();
+//				int chdist=challenge.getDistance();
+//				res=((sdist*100)/chdist);
+//				System.out.println("Chall accomplished by: "+res);
+//				return res;
+//				
+//			}
+//		}
+//		System.out.println("Error");
 		return res;
 	}
 	//Check this
-	private Date addHoursToJavaUtilDate(Date d, int h) {
+	private Date addHoursToJavaUtilDate(Date string, int h) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(d);
+		calendar.setTime(string);
 		calendar.add(Calendar.HOUR_OF_DAY, h);
 		return calendar.getTime();
 	}
 	//Create Challenges
-	public void createChallenge(UserDTO user,ChallengeDTO challenge){
+	public void createChallenge(UserDTO user,String name, String start, String end ,int distance ,float time,String Sport ){
 		User u= new User();
 		Challenge ch= new Challenge();
 		u.setNickname(user.getNickname());
-		ch.setDistance(challenge.getDistance());
-		ch.setEnd(challenge.getEnd());
-		ch.setName(ch.getName());
-		ch.setStart(challenge.getStart());
-		ch.setTime(ch.getTime());
+		ch.setDistance(distance);
+		ch.setEnd(end);
+		ch.setName(name);
+		ch.setStart(start);
+		ch.setTime(time);
 		ch.setOwner(u);
-		this.challenges.add(ch);
+		ChallengeDAO.getInstance().save(ch);
+	}
+	//Create Session
+	
+	public List <SessionDTO> createSession(UserDTO userDTO, String title , String sport, int distance, String start, long duration){
+		User user = new User();
+		for(User u: UserDAO.getInstance().getAll()) {
+			if(u.getNickname().matches(userDTO.getNickname())) {
+				user=u;
+			}
+		}
+		Session s =new Session();
+		s.setTitle(title);
+		s.setSport(sport);
+		s.setDistance(distance);
+		s.setStart(start);
+		s.setDuration(duration);
+		user.getSessions().add(s);
+		SessionDAO.getInstance().save(s);
+		UserDAO.getInstance().save(user);
+		
+		SessionAssembler sA=  new SessionAssembler();
+		ArrayList<SessionDTO> sessions = new ArrayList<>();
+		for(Session session: user.getSessions()) {
+			sessions.add(sA.sessionToDTO(session));
+		}
+		return sessions;
+	}
+	public void DBupdate(List<User> users,List<Session>sessions,List<Challenge> challenges) {
+		for(Challenge ch: ChallengeDAO.getInstance().getAll()) {
+			ChallengeDAO.getInstance().delete(ch);
+		}
+		for (User u: UserDAO.getInstance().getAll()) {
+			UserDAO.getInstance().delete(u);
+		}
+		for(Session s: SessionDAO.getInstance().getAll()) {
+			SessionDAO.getInstance().delete(s);
+		}
+		
+		for(User user: users) {
+			UserDAO.getInstance().save(user);
+		}
+		for(Session s: sessions) {
+			SessionDAO.getInstance().save(s);
+		}
+		for(Challenge ch:challenges) {
+			ChallengeDAO.getInstance().save(ch);
+		}
+	}
+	
+	//Accept chall
+	public UserDTO acceptChallenge(User userDTO, ChallengeDTO challengeAccepted, CrAppService cr) {
+		User user=UserDAO.getInstance().find(userDTO.getNickname());
+		for(User u : UserDAO.getInstance().getAll()) {
+			if(userDTO.getNickname().matches(u.getNickname())) {
+				user=u;
+			}
+		}
+		System.out.println(user.getNickname());
+		Challenge challenge = new Challenge();
+		for(Challenge ch: ChallengeDAO.getInstance().getAll()) {
+			if(ch.getName().matches(challengeAccepted.getName())) {
+				challenge=ch;
+			}
+		}
+		if(user.getChallenges()!=null) {
+			user.getChallenges().add(challenge);
+		}else {
+			List<Challenge> challenges = new ArrayList<>();
+			user.setChallenges(challenges);
+		}
+		
+		//ChallengeDAO.getInstance().save(challenge);
+		UserDAO.getInstance().save(user);
+		UserAssembler uA= new UserAssembler();
+		//Final u
+		UserDTO Fuser;
+		Fuser= uA.userToDTO(user,cr);
+		return Fuser;
+		
 	}
 	//Del challenge
 	public void DelChallenge(String title){

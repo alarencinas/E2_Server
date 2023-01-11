@@ -6,6 +6,7 @@ import server.data.domain.Challenge;
 import server.data.domain.LoginUserType;
 import server.data.domain.Session;
 import server.data.domain.User;
+import server.services.CrAppService;
 //This class is part of the DTO pattern. It also implements Singleton Pattern.
 public class UserAssembler {
 	private static UserAssembler instance;
@@ -20,7 +21,7 @@ public class UserAssembler {
 		return instance;
 	}
 
-	public static UserDTO userToDTO(User user) {
+	public UserDTO userToDTO(User user, CrAppService cr) {
 		UserDTO dto = new UserDTO();
 		
 		dto.setEmail(user.getEmail());
@@ -56,5 +57,7 @@ public class UserAssembler {
 			dto.setUsertype(LoginUserTypeDTO.Email);
 		}
 		return dto;
+		
 	}
+	
 }

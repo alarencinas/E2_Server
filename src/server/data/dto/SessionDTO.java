@@ -15,7 +15,7 @@ public class SessionDTO implements Serializable {
 	private String title;
 	private String sport;
 	private int distance;
-	private Date start;
+	private String start;
 	
 	private long duration;
 	public String getTitle() {
@@ -36,10 +36,10 @@ public class SessionDTO implements Serializable {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
-	public Date getStart() {
+	public String getStart() {
 		return start;
 	}
-	public void setStart(Date start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
 	

@@ -8,12 +8,23 @@ import java.util.Locale;
 import javax.swing.text.DateFormatter;
 
 import java.util.Date;
+import javax.jdo.annotations.Discriminator;
+import javax.jdo.annotations.DiscriminatorStrategy;
+import javax.jdo.annotations.Inheritance;
+import javax.jdo.annotations.InheritanceStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable(detachable="true")
+@Discriminator(strategy = DiscriminatorStrategy.CLASS_NAME)
 public class Challenge {
 	private String name;
-	private Date start;
-	private Date end;
+	private String start;
+	private String end;
 	private int distance;
 	private float time;
+	@Persistent(defaultFetchGroup="true")
 	private User owner;
 	private String sport;
 	
@@ -24,16 +35,16 @@ public class Challenge {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getStart() {
+	public String getStart() {
 		return start;
 	}
-	public void setStart(Date start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
-	public Date getEnd() {
+	public String getEnd() {
 		return end;
 	}
-	public void setEnd(Date end) {
+	public void setEnd(String end) {
 		this.end = end;
 	}
 	public int getDistance() {

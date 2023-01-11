@@ -71,10 +71,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 	public float challAcomplished(UserDTO user, ChallengeDTO challenge) throws RemoteException {
 		return crService.challAcomplished(user, challenge);
 	}
-	@Override
-	public void createChallenge(UserDTO user, ChallengeDTO challenge) throws RemoteException {
-		 crService.createChallenge(user, challenge);
-	}
+	
 
 		@Override
 	public void DelChallenge(String title) throws RemoteException {
@@ -85,6 +82,34 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 	@Override
 	public UserDTO getUser(String email, String password) throws RemoteException, ParseException {
 		return loginService.getUser(email, password);
+	}
+	@Override
+	public UserDTO acceptChallenge(User userDTO, ChallengeDTO challengeAccepted) throws RemoteException {
+		return crService.acceptChallenge(userDTO, challengeAccepted, crService);
+		
+	}
+	@Override
+	public List<SessionDTO> createSession(UserDTO userDTO, String title, String sport, int distance, String start,
+			long duration) throws RemoteException {
+		return crService.createSession(userDTO, title, sport, distance, start, duration);
+		
+	}
+	@Override
+	public void createChallenge(UserDTO userDTO, String name, String start, String end, int distance, float time,
+			String Sport) throws RemoteException {
+	 crService.createChallenge(userDTO, name, start, end, distance, time, Sport);
+		
+	}
+	@Override
+	public void createUser(LoginUserTypeDTO type, String nickname, String password, String email)
+			throws RemoteException {
+	
+		loginService.createUser(type, nickname, password, email);
+	}
+	@Override
+	public UserDTO updateUser(UserDTO user) throws RemoteException {
+	
+		return loginService.updateUser(user, crService);
 	}
 	
 	
