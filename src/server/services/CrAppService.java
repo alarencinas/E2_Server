@@ -22,9 +22,14 @@ public class CrAppService {
 	//TODO: remove when DAO Pattern is implemented
 	private List<Session> sessions = new ArrayList<>();
 	private List<Challenge> challenges= new ArrayList<>();
-	public CrAppService()  {
+	public CrAppService()   {
 		//TODO: remove when DAO Pattern is implemented
-		this.initilizeData();
+		try {
+			this.initilizeData();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	//TODO: remove when DAO Pattern is implemented
 	private void initilizeData() throws ParseException  {

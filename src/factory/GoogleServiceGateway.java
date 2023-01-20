@@ -1,4 +1,4 @@
-package factory;
+ package factory;
 
 import java.rmi.Naming;
 import Remote.IGoogle;
