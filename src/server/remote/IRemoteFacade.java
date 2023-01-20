@@ -27,9 +27,9 @@ public interface IRemoteFacade extends Remote {
 	public  UserDTO acceptChallenge(User userDTO, ChallengeDTO challengeAccepted) throws RemoteException;
 	
 	//Create Session
-	public List <SessionDTO> createSession(UserDTO userDTO, String title , String sport, int distance, String start, long duration)throws RemoteException;
+	public List <SessionDTO> createSession(UserDTO userDTO, String title , String sport, int distance, Date start, long duration)throws RemoteException;
 	//Create Challenge
-	public void createChallenge(UserDTO userDTO,String name, String start, String end ,int distance ,float time,String Sport )throws RemoteException;
+	public void createChallenge(UserDTO userDTO,String name, Date start, Date end ,int distance ,float time,String Sport )throws RemoteException;
 	
 	//Create User
 	public void createUser(LoginUserTypeDTO type, String nickname,String password,String email)throws RemoteException;

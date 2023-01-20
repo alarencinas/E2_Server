@@ -43,14 +43,16 @@ public class LoginAppService {
 		s1.setTitle("Running");
 		s1.setDuration(30);
 		s1.setDistance(100);
-		s1.setStart("05/09/2022");
+	    String sDate1="05/09/2022";  
+	    s1.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate1)); 
 		s1.setSport("Athletism");
 		//S2
 		Session s2=new Session();
 		s2.setTitle("Swiming");
 		s2.setDuration(30);
 		s2.setDistance(100);
-		s2.setStart("01/12/2022");
+		String sDate2="01/12/2022";  
+	    s2.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate2)); 
 		s2.setSport("Natation");
 		//Sessions
 		ArrayList<Session> sessions= new ArrayList<>();
@@ -74,14 +76,16 @@ public class LoginAppService {
 		s3.setTitle("Fighting");
 		s3.setDuration(50);
 		s3.setDistance(120);
-		s3.setStart("08/10/2022");
+		String sDate3="08/10/2022";  
+	    s3.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate3)); 
 		s3.setSport("Boxing");
 		//S4
 		Session s4= new Session();
 		s4.setTitle("Jumping");
 		s4.setDuration(120);
 		s4.setDistance(10);
-		s4.setStart("07/07/2022");
+		String sDate4="07/07/2022";  
+	    s4.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate4)); 
 		s4.setSport("Athletism");
 		ArrayList<Session> sessions2= new ArrayList<>();
 		sessions2.add(s3);
@@ -97,13 +101,15 @@ public class LoginAppService {
 		s5.setTitle("Sprint");
 		s5.setDuration(50);
 		s5.setDistance(120);
-		s5.setStart("03/06/2022");
+		String sDate5="03/06/2022";  
+	    s5.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate5)); 
 		s5.setSport("Athletism");
 		Session s6= new Session();
 		s6.setTitle("HighJump");
 		s6.setDuration(50);
 		s6.setDistance(120);
-		s6.setStart("03/06/2022");
+		String sDate6="03/06/2022";  
+	    s6.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate6)); 
 		s6.setSport("Natation");
 		ArrayList<Session> sessions3= new ArrayList<>();
 		sessions3.add(s5);

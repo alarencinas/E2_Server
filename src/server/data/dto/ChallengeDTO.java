@@ -11,8 +11,8 @@ public class ChallengeDTO implements Serializable{
 	//This attribute is needed to implement the "Serializable" interface.
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private String start;
-	private String end;
+	private Date start;
+	private Date end;
 	private int distance;
 	private float time;
 	private String sport;
@@ -25,17 +25,17 @@ public class ChallengeDTO implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getStart() {
+	public Date getStart() {
 		return start;
 	}
-	public void setStart(String start) {
+	public void setStart(Date start) {
 		this.start = start;
 	}
-	public String getEnd() {
+	public Date getEnd() {
 		return end;
 	}
-	public void setEnd(String end) {
-		this.end = end;
+	public void setEnd(Date end2) {
+		this.end = end2;
 	}
 	public int getDistance() {
 		return distance;

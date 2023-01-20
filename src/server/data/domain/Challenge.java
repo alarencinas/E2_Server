@@ -20,8 +20,8 @@ import javax.jdo.annotations.PrimaryKey;
 @Discriminator(strategy = DiscriminatorStrategy.CLASS_NAME)
 public class Challenge {
 	private String name;
-	private String start;
-	private String end;
+	private Date start;
+	private Date end;
 	private int distance;
 	private float time;
 	@Persistent(defaultFetchGroup="true")
@@ -35,16 +35,16 @@ public class Challenge {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getStart() {
+	public Date getStart() {
 		return start;
 	}
-	public void setStart(String start) {
+	public void setStart(Date start) {
 		this.start = start;
 	}
-	public String getEnd() {
+	public Date getEnd() {
 		return end;
 	}
-	public void setEnd(String end) {
+	public void setEnd(Date end) {
 		this.end = end;
 	}
 	public int getDistance() {

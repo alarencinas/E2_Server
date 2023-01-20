@@ -89,13 +89,13 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		
 	}
 	@Override
-	public List<SessionDTO> createSession(UserDTO userDTO, String title, String sport, int distance, String start,
+	public List<SessionDTO> createSession(UserDTO userDTO, String title, String sport, int distance, Date start,
 			long duration) throws RemoteException {
 		return crService.createSession(userDTO, title, sport, distance, start, duration);
 		
 	}
 	@Override
-	public void createChallenge(UserDTO userDTO, String name, String start, String end, int distance, float time,
+	public void createChallenge(UserDTO userDTO, String name, Date start, Date end, int distance, float time,
 			String Sport) throws RemoteException {
 	 crService.createChallenge(userDTO, name, start, end, distance, time, Sport);
 		

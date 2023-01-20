@@ -16,7 +16,7 @@ public class Session {
 	private String title;
 	private String sport;
 	private int distance;
-	private String start;
+	private Date start;
 	
 
 	private long duration;
@@ -40,10 +40,10 @@ public class Session {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
-	public String getStart() {
+	public Date getStart() {
 		return start;
 	}
-	public void setStart(String start) {
+	public void setStart(Date start) {
 		this.start = start;
 	}
 	

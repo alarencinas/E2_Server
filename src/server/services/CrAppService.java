@@ -27,7 +27,7 @@ public class CrAppService {
 		this.initilizeData();
 	}
 	//TODO: remove when DAO Pattern is implemented
-	private void initilizeData()  {
+	private void initilizeData() throws ParseException  {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		//Create Users
 		User user0 = new User();
@@ -46,8 +46,10 @@ public class CrAppService {
 		//Challenge 1
 		Challenge ch1= new Challenge();
 		ch1.setDistance(1000);
-		ch1.setStart("01/01/2022");
-		ch1.setEnd("31/12/2022");
+		String sDate1 = "01/01/2022";
+		ch1.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate1));  
+		String sDate2 = "31/12/2022";
+		ch1.setEnd( new SimpleDateFormat("dd/MM/yyyy").parse(sDate2));
 		ch1.setName("SLOWRUN");
 		ch1.setSport("Athletism");
 		ch1.setTime(20);
@@ -55,8 +57,10 @@ public class CrAppService {
 		//Challenge 2
 		Challenge ch2= new Challenge();
 		ch2.setDistance(2000);
-		ch2.setStart("01/04/2022");
-		ch2.setEnd("31/12/2022");
+		String sDate3 = "01/04/2022";
+		ch2.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate3));
+		String sDate4 = "31/12/2022";
+		ch2.setStart( new SimpleDateFormat("dd/MM/yyyy").parse(sDate4));
 		ch2.setName("DIVEFAST");
 		ch2.setSport("Natation");
 		ch2.setTime(60);
@@ -66,7 +70,7 @@ public class CrAppService {
 	}
 	
 	public ArrayList<ChallengeDTO> getChallenges(String sport){
-		//TODO: Get all the challenges using DAO Patte
+		//TODO: Get all the challenges using DAO Pattern
 		ArrayList<ChallengeDTO> challenges2 = new ArrayList<>();
 		for(Challenge ch :this.challenges)
 		if(ch.getSport().equals(sport)) {
@@ -106,7 +110,7 @@ public class CrAppService {
 		return calendar.getTime();
 	}
 	//Create Challenges
-	public void createChallenge(UserDTO user,String name, String start, String end ,int distance ,float time,String Sport ){
+	public void createChallenge(UserDTO user,String name, Date start, Date end ,int distance ,float time,String Sport ){
 		User u= new User();
 		Challenge ch= new Challenge();
 		u.setNickname(user.getNickname());
@@ -120,7 +124,7 @@ public class CrAppService {
 	}
 	//Create Session
 	
-	public List <SessionDTO> createSession(UserDTO userDTO, String title , String sport, int distance, String start, long duration){
+	public List <SessionDTO> createSession(UserDTO userDTO, String title , String sport, int distance, Date start, long duration){
 		User user = new User();
 		for(User u: UserDAO.getInstance().getAll()) {
 			if(u.getNickname().matches(userDTO.getNickname())) {
