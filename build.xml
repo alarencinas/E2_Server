@@ -58,13 +58,13 @@
 	        </schematool>
 		</target>
 	
-	<target name="6.local.test" depends="1.build" description="Runs local repository test">
+	<target name="6.local.test" depends="5.delete-db-schema" description="Runs local repository test">
 		<java classname="server.test.LocalTest" classpathref="classpath" fork="true">
 		<jvmarg value="-Dlog4j.configuration=log4j.properties"/>
 		</java>
     </target>
 	
-	<target name="7.server" depends="1.build" description="Runs the Server">
+	<target name="7.server" depends="4.create-db-schema" description="Runs the Server">
 		<java classname="server.MainProgram" classpathref="classpath" fork="true">
         	<jvmarg value="-Djava.rmi.server.codebase=file:${bin.dir}/"/>
 			<jvmarg value="-Djava.security.policy=${policy.file}"/>
