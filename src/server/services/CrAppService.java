@@ -176,7 +176,7 @@ public class CrAppService {
 	}
 	
 	//Accept chall
-	public UserDTO acceptChallenge(User userDTO, ChallengeDTO challengeAccepted, CrAppService cr) {
+	public UserDTO acceptChallenge(UserDTO userDTO, ChallengeDTO challengeAccepted, CrAppService cr) {
 		User user=UserDAO.getInstance().find(userDTO.getNickname());
 		for(User u : UserDAO.getInstance().getAll()) {
 			if(userDTO.getNickname().matches(u.getNickname())) {

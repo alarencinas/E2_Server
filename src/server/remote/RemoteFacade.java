@@ -84,7 +84,7 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		return loginService.getUser(email, password);
 	}
 	@Override
-	public UserDTO acceptChallenge(User userDTO, ChallengeDTO challengeAccepted) throws RemoteException {
+	public UserDTO acceptChallenge(UserDTO userDTO, ChallengeDTO challengeAccepted) throws RemoteException {
 		return crService.acceptChallenge(userDTO, challengeAccepted, crService);
 		
 	}
