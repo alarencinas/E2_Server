@@ -78,13 +78,7 @@ public class Challenge {
 		
 		return result.toString();
 	}
-//	public boolean equals(Object obj) {
-//		if (this.getClass().getName().equals(obj.getClass().getName())) {
-//			return this.name.equals(((Challenge)obj).name);
-//		}
-//		
-//		return false;
-//	}
+
 	public User getOwner() {
 		return owner;
 	}

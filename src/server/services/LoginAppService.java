@@ -27,8 +27,8 @@ import server.data.dto.UserDTO;
 public class LoginAppService {
 	private List<User> users= new ArrayList<>();
 	private UserAssembler userassembler = new UserAssembler();
-	private SessionAssembler sessionAssembler= new SessionAssembler(); 	//TODO CALLING THE CONSTRUCTORS DIRECTLY ,NOT THE LOGINFACTORY
-	private GoogleServiceGateway Googleservice = new GoogleServiceGateway(); //TODO NOT NULLPOINTER BECAUSE WE DECLARE DE CONSTRUCTORS INSTEAD OF THE LOGINFACTORY
+	private SessionAssembler sessionAssembler= new SessionAssembler(); 	
+	private GoogleServiceGateway Googleservice = new GoogleServiceGateway(); 
 	private FacebookSocketClient client= new FacebookSocketClient("0.0.0.0", 35600);
 	
 	public UserDTO getUser(String email, String pass) throws ParseException {
@@ -227,26 +227,18 @@ public class LoginAppService {
 			user.setUsertype(LoginUserType.Email);
 			UserDAO.getInstance().save(user);
 		}else if(type.equals(LoginUserTypeDTO.Google)) {
-			if(Googleservice.checkUser(email, password)) {
+			
 				user.setUsertype(LoginUserType.Google);
 				UserDAO.getInstance().save(user);
 				System.out.println("GOOGLE USER");
-				
-			}else {
-				JOptionPane.showMessageDialog(null, "this GOOGLE user does not exists");
-				
-			}
+			
 			
 		}else if(type.equals(LoginUserTypeDTO.Facebook)) {
-			if(Googleservice.checkUser(email, password)) {
+			
 				user.setUsertype(LoginUserType.Facebook);
 				UserDAO.getInstance().save(user);
 				System.out.println("Facebook USER");
 				
-			}else {
-				JOptionPane.showMessageDialog(null, "this FACEBOOK user does not exists");
-				
-			}
 			
 		}
 	}

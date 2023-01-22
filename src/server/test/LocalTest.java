@@ -40,7 +40,7 @@ public class LocalTest {
 		for(SessionDTO s: sessions) {
 			System.out.println(s);
 		}
-		challenges=Rfacade.getChallenges("Natation");
+		challenges=Rfacade.getChallenges();
 		challenge=challenges.get(0);
 		for(ChallengeDTO chdto: challenges) {
 			System.out.println(chdto);
@@ -56,7 +56,7 @@ public class LocalTest {
 		token = Rfacade.login("thomas.e2001@gmail.com", sha1, "Thomas", LoginUserTypeDTO.Email);	
 		//Logout
 		Rfacade.logout(token);
-		challenges = Rfacade.getChallenges(challenge.getSport());
+		challenges = Rfacade.getChallenges();
 		challenge = challenges.get(0); 			
 		System.out.println("\t- " + challenge);
 	}catch (Exception e) {

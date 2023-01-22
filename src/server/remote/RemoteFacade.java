@@ -24,7 +24,6 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 	private static final long serialVersionUID = 1L;
 	//Data structure for manage Server State
 	private Map<Long, User> serverState = new HashMap<>();
-	//TODO: Remove this instances when Singleton Pattern is implemented
 	private LoginAppService loginService = new LoginAppService();
 	private CrAppService crService= new CrAppService();
 	public RemoteFacade() throws RemoteException {
@@ -63,8 +62,8 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		//¿HAcer mas Tarde con CrApp?
 	}
 	
-	public List<ChallengeDTO> getChallenges(String sport) throws RemoteException{
-		ArrayList<ChallengeDTO> ch= crService.getChallenges(sport);
+	public List<ChallengeDTO> getChallenges() throws RemoteException{
+		ArrayList<ChallengeDTO> ch= crService.getChallenges();
 	return ch;
 	}
 	@Override
@@ -84,14 +83,14 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 		return loginService.getUser(email, password);
 	}
 	@Override
-	public UserDTO acceptChallenge(UserDTO userDTO, ChallengeDTO challengeAccepted) throws RemoteException {
-		return crService.acceptChallenge(userDTO, challengeAccepted, crService);
+	public void acceptChallenge(UserDTO userDTO, ChallengeDTO challengeAccepted) throws RemoteException {
+		crService.acceptChallenge(userDTO, challengeAccepted);
 		
 	}
 	@Override
-	public List<SessionDTO> createSession(UserDTO userDTO, String title, String sport, int distance, Date start,
+	public void createSession(UserDTO userDTO, String title, String sport, int distance, Date start,
 			long duration) throws RemoteException {
-		return crService.createSession(userDTO, title, sport, distance, start, duration);
+		crService.createSession(userDTO, title, sport, distance, start, duration);
 		
 	}
 	@Override
@@ -111,17 +110,5 @@ public class RemoteFacade extends UnicastRemoteObject implements IRemoteFacade  
 	
 		return loginService.updateUser(user, crService);
 	}
-	
-	
-	
-	
-	
-	
-	
-	//public void signUp(long token, Challenge challenge) {
-	//	Owner.addChallenge(challenge);
-		
-	//}
-	
 	
 }

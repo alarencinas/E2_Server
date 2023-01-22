@@ -74,14 +74,15 @@ public class CrAppService {
 		challenges.add(ch2);
 	}
 	
-	public ArrayList<ChallengeDTO> getChallenges(String sport){
+	public ArrayList<ChallengeDTO> getChallenges(){
 		//TODO: Get all the challenges using DAO Pattern
 		ArrayList<ChallengeDTO> challenges2 = new ArrayList<>();
-		for(Challenge ch :this.challenges)
-		if(ch.getSport().equals(sport)) {
+		for(Challenge ch : ChallengeDAO.getInstance().getAll()) {
+	
 			ChallengeAssembler.getInstance();
 			ChallengeDTO chdto= ChallengeAssembler.challengeToDTO(ch);
 			challenges2.add(chdto);
+			
 		}
 		return challenges2;
 	}
@@ -90,21 +91,6 @@ public class CrAppService {
 		float res=0;
 		
 		
-//		for(SessionDTO session: user.getSessions()) {
-//			float sdist=0;
-//			float t = session.getDuration();
-//			int time=(int)t;
-//			Date d= addHoursToJavaUtilDate(session.getStart(),time);
-//			if(session.getSport().matches(challenge.getSport()) && session.getStart().after(challenge.getStart()) && d.before(challenge.getEnd())){
-//				sdist= sdist+ session.getDistance();
-//				int chdist=challenge.getDistance();
-//				res=((sdist*100)/chdist);
-//				System.out.println("Chall accomplished by: "+res);
-//				return res;
-//				
-//			}
-//		}
-//		System.out.println("Error");
 		return res;
 	}
 	//Check this
@@ -129,13 +115,10 @@ public class CrAppService {
 	}
 	//Create Session
 	
-	public List <SessionDTO> createSession(UserDTO userDTO, String title , String sport, int distance, Date start, long duration){
+	public void createSession(UserDTO userDTO, String title , String sport, int distance, Date start, long duration){
 		User user = new User();
-		for(User u: UserDAO.getInstance().getAll()) {
-			if(u.getNickname().matches(userDTO.getNickname())) {
-				user=u;
-			}
-		}
+		user.setNickname(userDTO.getNickname());
+
 		Session s =new Session();
 		s.setTitle(title);
 		s.setSport(sport);
@@ -145,13 +128,7 @@ public class CrAppService {
 		user.getSessions().add(s);
 		SessionDAO.getInstance().save(s);
 		UserDAO.getInstance().save(user);
-		
-		SessionAssembler sA=  new SessionAssembler();
-		ArrayList<SessionDTO> sessions = new ArrayList<>();
-		for(Session session: user.getSessions()) {
-			sessions.add(sA.sessionToDTO(session));
-		}
-		return sessions;
+
 	}
 	public void DBupdate(List<User> users,List<Session>sessions,List<Challenge> challenges) {
 		for(Challenge ch: ChallengeDAO.getInstance().getAll()) {
@@ -176,13 +153,9 @@ public class CrAppService {
 	}
 	
 	//Accept chall
-	public UserDTO acceptChallenge(UserDTO userDTO, ChallengeDTO challengeAccepted, CrAppService cr) {
+	public void acceptChallenge(UserDTO userDTO, ChallengeDTO challengeAccepted) {
 		User user=UserDAO.getInstance().find(userDTO.getNickname());
-		for(User u : UserDAO.getInstance().getAll()) {
-			if(userDTO.getNickname().matches(u.getNickname())) {
-				user=u;
-			}
-		}
+		
 		System.out.println(user.getNickname());
 		Challenge challenge = new Challenge();
 		for(Challenge ch: ChallengeDAO.getInstance().getAll()) {
@@ -197,16 +170,11 @@ public class CrAppService {
 			user.setChallenges(challenges);
 		}
 		
-		//ChallengeDAO.getInstance().save(challenge);
 		UserDAO.getInstance().save(user);
-		UserAssembler uA= new UserAssembler();
-		//Final u
-		UserDTO Fuser;
-		Fuser= uA.userToDTO(user,cr);
-		return Fuser;
+		
+		
 		
 	}
-	//Del challenge
 	public void DelChallenge(String title){
 		List<Challenge> ch= new ArrayList<>();
 		for(Challenge c: this.challenges) {
